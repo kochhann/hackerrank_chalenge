@@ -1,4 +1,5 @@
 from decimal import Decimal
+from datetime import datetime
 
 
 def compare_triplets(a_case, b_case):
@@ -60,6 +61,44 @@ def mini_max_sum(arr):
     print(f'{v_min} {v_max}')
 
 
+def birthday_cake_candles(candles):
+    # tallest = [x for x in candles if x == max(candles)]
+    return candles.count(max(candles))
+
+
+def time_conversion(s):
+    if s[-2:] == "AM":
+        if s[:2] == '12':
+            n_time = str('00' + s[2:8])
+        else:
+            n_time = s[:-2]
+    else:
+        if s[:2] == '12':
+            n_time = s[:-2]
+        else:
+            n_time = str(int(s[:2]) + 12) + s[2:8]
+    return n_time
+
+
+def cavity_map(grid):
+    grid_size = len(grid)
+    output = [[0] * grid_size for _ in range(grid_size)]
+
+    for ind in range(grid_size):
+        for jnd in range(grid_size):
+            if (0 < ind < grid_size - 1 and 0 < jnd < grid_size - 1 and
+                    grid[ind][jnd] > grid[ind + 1][jnd] and
+                    grid[ind][jnd] > grid[ind - 1][jnd] and
+                    grid[ind][jnd] > grid[ind][jnd + 1] and
+                    grid[ind][jnd] > grid[ind][jnd - 1]):
+                output[ind][jnd] = 'X'
+            else:
+                output[ind][jnd] = grid[ind][jnd]
+
+    return ["".join(x) for x in output]
+
+
 if __name__ == '__main__':
-    arr = [1, 3, 5, 7, 9]
-    mini_max_sum(arr)
+    grid = ['1112', '1912', '1892', '1234']
+    n_grid = cavity_map(grid)
+    print(n_grid)
